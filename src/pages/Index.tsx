@@ -13,6 +13,8 @@ const Index = () => {
     isLoading,
     apiKey,
     setApiKey,
+    selectedModel,
+    setSelectedModel,
     sendMessage,
   } = useGeminiChat();
   
@@ -58,6 +60,8 @@ const Index = () => {
           onOpenChange={setSettingsOpen}
           apiKey={apiKey}
           onApiKeyChange={setApiKey}
+          selectedModel={selectedModel}
+          onModelChange={setSelectedModel}
         />
       </div>
     );
@@ -117,6 +121,8 @@ const Index = () => {
         onOpenChange={setSettingsOpen}
         apiKey={apiKey}
         onApiKeyChange={setApiKey}
+        selectedModel={selectedModel}
+        onModelChange={setSelectedModel}
       />
     </div>
   );

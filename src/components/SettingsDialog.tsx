@@ -9,6 +9,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Eye, EyeOff, Key } from "lucide-react";
 
 interface SettingsDialogProps {
@@ -16,6 +17,8 @@ interface SettingsDialogProps {
   onOpenChange: (open: boolean) => void;
   apiKey: string;
   onApiKeyChange: (apiKey: string) => void;
+  selectedModel: string;
+  onModelChange: (model: string) => void;
 }
 
 export function SettingsDialog({
@@ -23,12 +26,23 @@ export function SettingsDialog({
   onOpenChange,
   apiKey,
   onApiKeyChange,
+  selectedModel,
+  onModelChange,
 }: SettingsDialogProps) {
   const [showApiKey, setShowApiKey] = useState(false);
   const [tempApiKey, setTempApiKey] = useState(apiKey);
+  const [tempModel, setTempModel] = useState(selectedModel);
+
+  const geminiModels = [
+    { value: "gemini-2.0-flash-exp", label: "Gemini 2.0 Flash (Experimental)" },
+    { value: "gemini-1.5-pro", label: "Gemini 1.5 Pro" },
+    { value: "gemini-1.5-flash", label: "Gemini 1.5 Flash" },
+    { value: "gemini-1.0-pro", label: "Gemini 1.0 Pro" },
+  ];
 
   const handleSave = () => {
     onApiKeyChange(tempApiKey);
+    onModelChange(tempModel);
     onOpenChange(false);
   };
 
@@ -81,6 +95,25 @@ export function SettingsDialog({
               >
                 Google AI Studio
               </a>
+            </p>
+          </div>
+          
+          <div className="space-y-2">
+            <Label htmlFor="model-select">Gemini Model</Label>
+            <Select value={tempModel} onValueChange={setTempModel}>
+              <SelectTrigger>
+                <SelectValue placeholder="Select a model" />
+              </SelectTrigger>
+              <SelectContent>
+                {geminiModels.map((model) => (
+                  <SelectItem key={model.value} value={model.value}>
+                    {model.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <p className="text-xs text-muted-foreground">
+              Choose the Gemini model for your conversations.
             </p>
           </div>
         </div>

@@ -12,6 +12,7 @@ export function useGeminiChat() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [apiKey, setApiKey] = useState("");
+  const [selectedModel, setSelectedModel] = useState("gemini-2.0-flash-exp");
   const { toast } = useToast();
 
   const sendMessage = useCallback(async (userMessage: string) => {
@@ -36,7 +37,7 @@ export function useGeminiChat() {
 
     try {
       const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key=${apiKey}`,
+        `https://generativelanguage.googleapis.com/v1beta/models/${selectedModel}:generateContent?key=${apiKey}`,
         {
           method: "POST",
           headers: {
@@ -90,7 +91,7 @@ export function useGeminiChat() {
     } finally {
       setIsLoading(false);
     }
-  }, [apiKey, toast]);
+  }, [apiKey, selectedModel, toast]);
 
   const clearMessages = useCallback(() => {
     setMessages([]);
@@ -101,6 +102,8 @@ export function useGeminiChat() {
     isLoading,
     apiKey,
     setApiKey,
+    selectedModel,
+    setSelectedModel,
     sendMessage,
     clearMessages,
   };
