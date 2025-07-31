@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Send, Loader2 } from "lucide-react";
+import { Send, Loader2, Paperclip } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface ChatInputProps {
@@ -32,14 +32,26 @@ export function ChatInput({ onSend, isLoading, disabled }: ChatInputProps) {
     <div className="border-t bg-background/80 backdrop-blur-sm p-4">
       <form onSubmit={handleSubmit} className="flex gap-3 max-w-4xl mx-auto">
         <div className="flex-1 relative">
+          <Button
+            type="button"
+            size="sm"
+            disabled={disabled}
+            className={cn(
+              "absolute left-2 bottom-2 h-8 w-8 p-0 z-10",
+              "bg-transparent hover:bg-muted/50 text-muted-foreground hover:text-foreground",
+              "transition-all duration-300"
+            )}
+          >
+            <Paperclip className="h-4 w-4" />
+          </Button>
           <Textarea
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="Message Gemini..."
+            placeholder="Message Yassen..."
             disabled={disabled}
             className={cn(
-              "min-h-[60px] max-h-[200px] resize-none pr-12",
+              "min-h-[60px] max-h-[200px] resize-none pl-12 pr-12",
               "border-0 bg-muted/50 focus-visible:ring-2 focus-visible:ring-primary",
               "transition-all duration-300 hover:bg-muted/70"
             )}
